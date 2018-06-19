@@ -30,30 +30,4 @@ enum CARDGAMEAPP {
             }
         }
     }
-    
-    enum Attributes {
-        case foundationField
-        case deckField
-        
-        var instance: UIImageView {
-            switch self {
-                case .foundationField:
-                    let card: UIImageView = UIImageView()
-                    card.layer.borderColor = UIColor.white.cgColor
-                    card.layer.borderWidth = 1
-                    card.contentMode = .scaleAspectFit
-                    card.clipsToBounds = true
-                    card.layer.cornerRadius = 5
-                return card
-            
-                case .deckField:
-                    let card = UIImageView()
-                    card.image = UIImage(named: "card-back")
-                    card.contentMode = .scaleAspectFit
-                    card.clipsToBounds = true
-                    card.layer.cornerRadius = 5
-                    return card
-                }
-        }
-    }
 }
