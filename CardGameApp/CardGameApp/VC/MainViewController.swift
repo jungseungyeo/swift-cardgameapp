@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainVC: BaseViewController {
+class MainViewController: BaseViewController {
     
     private let foundationField = FoundationCardView()
     private let deckField = DeckView()
