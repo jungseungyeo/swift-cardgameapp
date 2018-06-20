@@ -11,7 +11,7 @@ import UIKit
 class StackCardView: BaseView {
     
     private let stackField: ConcreateCardView = ConcreateCardView()
-    private var stackCards: [UIImageView] = []
+    private var stackCards: [[UIImageView]] = []
     
     override func setupView() {
         super.setupView()
@@ -19,22 +19,37 @@ class StackCardView: BaseView {
     }
     
     private func makeStackCard() {
-        for _ in 1 ... 7 {
-            stackCards.append(directorView.createCardView(stackField))
+        for horizonNumber in 1 ... 7 {
+            var verticalCards: [UIImageView] = []
+            for _ in 1 ... horizonNumber {
+                verticalCards.append(directorView.createCardView(stackField))
+            }
+            stackCards.append(verticalCards)
+        }
+        
+    }
+    
+    func makelocationStackCard(_ stackCardNames: [[String]]) {
+        for (horizonNumber, verticalStackNames) in stackCardNames.enumerated() {
+            makeVerticalCardStackView(horizonNumber, verticalStackNames: verticalStackNames)
         }
     }
     
-    func makelocationStackCard(_ stackCardNames: [String]) {
-        for (index, stackCardName) in stackCardNames.enumerated() {
-            addSubview(stackCards[index])
-            stackCards[index].image = UIImage(named: stackCardName)
-            stackCards[index].frame = CGRect(x: (CARDGAMEAPP.LAYOUT.width.rawValue / CARDGAMEAPP.LAYOUT.horizonCardCount.rawValue) +
-                ((CARDGAMEAPP.LAYOUT.width.rawValue + CARDGAMEAPP.LAYOUT.margin.rawValue) * CGFloat(index)),
-                                             y: CARDGAMEAPP.LAYOUT.top.rawValue + CARDGAMEAPP.LAYOUT.width.rawValue * CARDGAMEAPP.LAYOUT.cardRatio.rawValue + CARDGAMEAPP.LAYOUT.margin.rawValue,
-                                             width: CARDGAMEAPP.LAYOUT.width.rawValue,
-                                             height: CARDGAMEAPP.LAYOUT.width.rawValue * CARDGAMEAPP.LAYOUT.cardRatio.rawValue)
-            
+    private func makeVerticalCardStackView(_ horizonNumber: Int, verticalStackNames: [String]) {
+        for (verticalNumber, stackCardName) in verticalStackNames.enumerated() {
+            addSubview(stackCards[horizonNumber][verticalNumber])
+            setCardImage(horizonNumber, verticalNumber, stackCardName)
+            stackCards[horizonNumber][verticalNumber].frame = CGRect(x: (CARDGAMEAPP.LAYOUT.width.rawValue / CARDGAMEAPP.LAYOUT.horizonCardCount.rawValue) +
+                ((CARDGAMEAPP.LAYOUT.width.rawValue + CARDGAMEAPP.LAYOUT.margin.rawValue) * CGFloat(horizonNumber)),
+                                                                     y: CARDGAMEAPP.LAYOUT.top.rawValue + CARDGAMEAPP.LAYOUT.width.rawValue * CARDGAMEAPP.LAYOUT.cardRatio.rawValue + CARDGAMEAPP.LAYOUT.margin.rawValue + CGFloat(verticalNumber) * 20,
+                                                                     width: CARDGAMEAPP.LAYOUT.width.rawValue,
+                                                                     height: CARDGAMEAPP.LAYOUT.width.rawValue * CARDGAMEAPP.LAYOUT.cardRatio.rawValue)
         }
-
+    }
+    
+    private func setCardImage(_ horizonNumber: Int, _ verticalNumber: Int, _ stackCardName: String) {
+        if horizonNumber == verticalNumber {
+            stackCards[horizonNumber][verticalNumber].image = UIImage(named: stackCardName)
+        }
     }
 }

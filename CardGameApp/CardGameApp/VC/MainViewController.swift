@@ -26,10 +26,15 @@ class MainViewController: BaseViewController {
         cardReset()
     }
     
-    private func makeStackCard() -> [String] {
-        var stackCardNames: [String] = []
-        for _ in 1 ... 7 {
-            stackCardNames.append(deck.removeOne().description)
+    private func makeStackCard() -> [[String]] {
+        var stackCardNames: [[String]] = []
+        
+        for horizonNumber in 1 ... 7 {
+            var verticalCardName: [String] = []
+            for _ in 1 ... horizonNumber {
+                verticalCardName.append(deck.removeOne().description)
+            }
+            stackCardNames.append(verticalCardName)
         }
         return stackCardNames
     }
