@@ -8,9 +8,9 @@
 
 import UIKit
 
-class DirectorView {
+class Director {
     
-    func createFoundationView(_ builder: FoundationViewable) -> UIImageView {
+    static func createFoundationView(_ builder: FoundationViewable) -> UIImageView {
         let builder = builder.instance()
         .setBorderColor(with: UIColor.white.cgColor)
         .setBorderWith(with: 1)
@@ -21,7 +21,7 @@ class DirectorView {
         return builder.foundationView
     }
     
-    func createCardView(_ builder: CardViewable) -> UIImageView {
+    static func createCardView(_ builder: CardViewable) -> UIImageView {
         let builder = builder.instance()
         .setImage(with: "card-back")
         .setContentMode(with: .scaleAspectFit)
